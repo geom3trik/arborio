@@ -15,7 +15,7 @@
 
 menucontroller {
     width: 100%;
-    font-size: 14px;
+    font-size: 14.0;
 }
 
 menustack {
@@ -55,7 +55,7 @@ menubutton:over {
     height: auto;
     layout-type: row;
     width: 100%;
-    min-width: 0;
+    min-width: 0px;
 }
 
 .tab {
@@ -66,7 +66,7 @@ menubutton:over {
     child-bottom: 1s;
     height: 30px;
     width: auto;
-    font-size: 15px;
+    font-size: 15.0;
 }
 
 .tab:checked {
@@ -78,11 +78,11 @@ menubutton:over {
     display: none;
     background-color: #4080c0;
     top: 1s;
-    bottom: 0;
+    bottom: 0px;
     height: 3px;
-    left: 0;
+    left: 0px;
     width: 1s;
-    right: 0;
+    right: 0px;
 }
 
 .tab:checked .tab_highlight {
@@ -102,14 +102,14 @@ menubutton:over {
     color: white;
     background-color: #209020;
     overflow: hidden;
-    left: 0;
+    left: 0px;
     child-left: 10px;
-    min-width: 0;
+    min-width: 0px;
     text-wrap: false;
 }
 
 #progress_bar_bg {
-    left: 0;
+    left: 0px;
     child-left: 10px;
     text-wrap: false;
 }
@@ -133,7 +133,7 @@ menubutton:over {
 }
 
 .module_title {
-    font-size: 20px;
+    font-size: 20.0;
 }
 
 .module_overview_card {
@@ -154,7 +154,7 @@ menubutton:over {
 }
 
 .btn_highlight .big_plus {
-    font-size: 30px;
+    font-size: 30.0;
     width: 40px;
     height: 40px;
     background-color: #40a080;
@@ -172,7 +172,7 @@ menubutton:over {
 /* project tab */
 
 .project_title {
-    font-size: 40px;
+    font-size: 40.0;
 }
 
 #maps_container {
@@ -188,7 +188,7 @@ menubutton:over {
 }
 
 .map_title {
-    font-size: 20px;
+    font-size: 20.0;
 }
 
 .btn_highlight.pencil_icon {
@@ -211,7 +211,7 @@ menubutton:over {
     width: 300px;
 }
 .project_name .pencilable_label {
-    font-size: 40px;
+    font-size: 40.0;
 }
 
 /* map meta tab */
@@ -285,7 +285,7 @@ palette list {
 .palette_item label {
     height: 20px;
     min-width: 100%;
-    font-size: 15px;
+    font-size: 15.0;
     child-left: 3px;
 }
 
@@ -317,7 +317,7 @@ palette list {
 }
 
 .tweaker dropdown {
-    font-size: 15px;
+    font-size: 15.0;
 }
 
 .tweaker_container {
@@ -383,7 +383,7 @@ style_list list {
     border-radius: 8px;
     color: black;
     child-space: 1s;
-    font-size: 10px;
+    font-size: 10.0;
 }
 
 .log_entry.error .log_icon {
@@ -471,10 +471,10 @@ label {
 
 .close_btn {
     background-color: #ffc0c0;
-    font-size: 12px;
+    font-size: 12.0;
     color: black;
     child-space: 1s;
-    min-height: 0;
+    min-height: 0px;
     height: 14px;
     width: 14px;
     border-radius: 50%;
@@ -485,13 +485,13 @@ label {
 }
 
 .remove_btn {
-    font-size: 12px;
+    font-size: 12.0;
     border-radius: 50%;
     color: black;
     child-space: 1s;
     width: 14px;
     height: 14px;
-    min-height: 0;
+    min-height: 0px;
     background-color: #c0a0a0;
     top: 1s;
     bottom: 1s;
@@ -502,13 +502,13 @@ label {
 }
 
 .add_btn {
-    font-size: 12px;
+    font-size: 12.0;
     border-radius: 50%;
     color: black;
     child-space: 1s;
     width: 14px;
     height: 14px;
-    min-height: 0;
+    min-height: 0px;
     background-color: #a0c0a0;
     top: 1s;
     bottom: 1s;
@@ -550,12 +550,12 @@ scrollbar.vertical>.thumb {
 }
 
 hstack {
-    child-space: 0;
+    child-space: 0px;
     overflow: visible;
 }
 
 vstack {
-    child-space: 0;
+    child-space: 0px;
     overflow: visible;
 }
 
@@ -597,7 +597,7 @@ button {
     border-width: 1px;
     border-radius: 3px;
     border-color: #888888;
-    outer-shadow: 0 3 3 #ffffff;
+    box-shadow: 0px 3px 3px #ffffff;
     child-top: 2px;
     child-bottom: 2px;
     child-left: 5px;
