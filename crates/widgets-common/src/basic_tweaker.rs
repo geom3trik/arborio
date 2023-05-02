@@ -1,7 +1,7 @@
 use crate::advanced_tweaker::attr_editor;
 use arborio_maploader::map_struct::Attribute;
 use arborio_modloader::config::{AttributeInfo, AttributeType};
-use arborio_utils::vizia::fonts::icons_names::DOWN;
+use arborio_utils::vizia::icons::ICON_CHEVRON_DOWN;
 use arborio_utils::vizia::prelude::*;
 
 pub fn basic_attrs_editor<LN, F, LK, LA, LC, FS>(
@@ -79,7 +79,7 @@ pub fn basic_attrs_editor<LN, F, LK, LA, LC, FS>(
                                             cx,
                                             found_lbl.as_ref().map_or("weh", |a| a.as_str()),
                                         );
-                                        Label::new(cx, DOWN).font_family(vec![FamilyOwned::Name(
+                                        Label::new(cx, ICON_CHEVRON_DOWN).font_family(vec![FamilyOwned::Name(
                                             "Entypo".to_owned(),
                                         )]);
                                     })
@@ -95,7 +95,7 @@ pub fn basic_attrs_editor<LN, F, LK, LA, LC, FS>(
                                             .toggle_class("checked", Some(idx) == found_idx)
                                             .on_press(move |cx| {
                                                 let key = lens_attr_key.get(cx);
-                                                setter(cx.as_mut(), key, opt.value.to_binel());
+                                                setter(cx, key, opt.value.to_binel());
                                                 cx.emit(PopupEvent::Close);
                                             });
                                     }

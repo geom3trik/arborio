@@ -8,25 +8,25 @@ use arborio_utils::vizia::prelude::*;
 pub fn main_widget(cx: &mut Context) {
     cx.add_global_listener(|cx, event| {
         event.map(|window_event, _| match window_event {
-            WindowEvent::KeyDown(Code::KeyZ, _) if cx.modifiers == &Modifiers::CTRL => {
+            WindowEvent::KeyDown(Code::KeyZ, _) if cx.modifiers() == &Modifiers::CTRL => {
                 cx.emit(AppEvent::MapEvent {
                     map: None,
                     event: MapEvent::Undo,
                 });
             }
-            WindowEvent::KeyDown(Code::KeyY, _) if cx.modifiers == &Modifiers::CTRL => {
+            WindowEvent::KeyDown(Code::KeyY, _) if cx.modifiers() == &Modifiers::CTRL => {
                 cx.emit(AppEvent::MapEvent {
                     map: None,
                     event: MapEvent::Redo,
                 });
             }
-            WindowEvent::KeyDown(Code::KeyS, _) if cx.modifiers == &Modifiers::CTRL => {
+            WindowEvent::KeyDown(Code::KeyS, _) if cx.modifiers() == &Modifiers::CTRL => {
                 cx.emit(AppEvent::MapEvent {
                     map: None,
                     event: MapEvent::Save,
                 });
             }
-            WindowEvent::KeyDown(Code::KeyM, _) if cx.modifiers == &Modifiers::ALT => {
+            WindowEvent::KeyDown(Code::KeyM, _) if cx.modifiers() == &Modifiers::ALT => {
                 cx.emit(AppEvent::MapEvent {
                     map: None,
                     event: MapEvent::OpenMeta,
@@ -84,7 +84,7 @@ fn build_menu_bar(cx: &mut Context) {
             MenuButton::new(
                 cx,
                 move |cx| {
-                    Label::new(cx, "Save Map");
+                    Label::new(cx, "Save Map")
                 },
                 move |cx| {
                     cx.emit(AppEvent::MapEvent {
@@ -103,7 +103,7 @@ fn build_menu_bar(cx: &mut Context) {
             MenuButton::new(
                 cx,
                 move |cx| {
-                    Label::new(cx, "Undo");
+                    Label::new(cx, "Undo")
                 },
                 move |cx| {
                     cx.emit(AppEvent::MapEvent {
@@ -116,7 +116,7 @@ fn build_menu_bar(cx: &mut Context) {
             MenuButton::new(
                 cx,
                 move |cx| {
-                    Label::new(cx, "Redo");
+                    Label::new(cx, "Redo")
                 },
                 move |cx| {
                     cx.emit(AppEvent::MapEvent {
@@ -129,7 +129,7 @@ fn build_menu_bar(cx: &mut Context) {
             MenuButton::new(
                 cx,
                 move |cx| {
-                    Label::new(cx, "Map Metadata");
+                    Label::new(cx, "Map Metadata")
                 },
                 move |cx| {
                     cx.emit(AppEvent::MapEvent {
@@ -148,7 +148,7 @@ fn build_menu_bar(cx: &mut Context) {
             MenuButton::new(
                 cx,
                 move |cx| {
-                    Label::new(cx, "Celeste Installation");
+                    Label::new(cx, "Celeste Installation")
                 },
                 move |cx| {
                     cx.emit(AppEvent::OpenInstallationTab);
@@ -157,7 +157,7 @@ fn build_menu_bar(cx: &mut Context) {
             MenuButton::new(
                 cx,
                 move |cx| {
-                    Label::new(cx, "Config Editor");
+                    Label::new(cx, "Config Editor")
                 },
                 move |cx| {
                     cx.emit(AppEvent::OpenConfigEditorTab);
@@ -166,7 +166,7 @@ fn build_menu_bar(cx: &mut Context) {
             MenuButton::new(
                 cx,
                 move |cx| {
-                    Label::new(cx, "Logs");
+                    Label::new(cx, "Logs")
                 },
                 move |cx| {
                     cx.emit(AppEvent::OpenLogsTab);

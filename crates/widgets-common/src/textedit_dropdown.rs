@@ -1,4 +1,4 @@
-use arborio_utils::vizia::fonts::icons_names::DOWN;
+use arborio_utils::vizia::icons::ICON_CHEVRON_DOWN;
 use arborio_utils::vizia::prelude::*;
 use std::marker::PhantomData;
 
@@ -29,7 +29,7 @@ impl<T> TextboxDropdown<T> {
                         Textbox::new(cx, lens.clone()).on_edit(move |cx, value| {
                             callback(cx, value);
                         });
-                        Label::new(cx, DOWN).class("icon").class("dropdown_icon");
+                        Label::new(cx, ICON_CHEVRON_DOWN).class("icon").class("dropdown_icon");
                     })
                 },
                 move |cx| {
@@ -40,7 +40,7 @@ impl<T> TextboxDropdown<T> {
                             .class("dropdown_element")
                             .on_press(move |cx| {
                                 let value = lens.get(cx).to_string();
-                                callback.clone()(cx.as_mut(), value);
+                                callback.clone()(cx, value);
                                 cx.emit(PopupEvent::Close);
                             });
                     });

@@ -21,7 +21,7 @@ impl Tool for BucketTool {
         }
 
         let Some(room) = app.current_room_ref() else { return vec![] };
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos = app
             .map_tab_unwrap()
             .transform
@@ -74,7 +74,7 @@ impl Tool for BucketTool {
             room.data.bounds.size.height as f32,
         );
 
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos = state
             .map_tab_unwrap()
             .transform

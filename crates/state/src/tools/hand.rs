@@ -25,14 +25,14 @@ impl Tool for HandTool {
 
         match event {
             WindowEvent::MouseDown(btn) if btn == &MouseButton::Left => {
-                self.last_pos = Some(ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory));
+                self.last_pos = Some(ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory));
                 vec![]
             }
             WindowEvent::MouseUp(btn) if btn == &MouseButton::Left => {
                 self.last_pos = None;
                 vec![]
             }
-            WindowEvent::MouseMove(x, y) if cx.mouse.left.state == MouseButtonState::Pressed => {
+            WindowEvent::MouseMove(x, y) if cx.mouse().left.state == MouseButtonState::Pressed => {
                 let screen_pt = ScreenPoint::new(*x, *y);
                 if self.last_pos.is_some() {
                     let screen_delta = screen_pt - self.last_pos.unwrap();

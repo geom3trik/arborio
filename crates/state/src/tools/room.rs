@@ -60,7 +60,7 @@ impl Tool for RoomTool {
             return events;
         }
 
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos_precise = app
             .map_tab_unwrap()
             .transform
@@ -104,7 +104,7 @@ impl Tool for RoomTool {
                         if let Some(g) = got {
                             self.pending_selection = HashSet::from([g]);
                         }
-                        if !cx.modifiers.contains(Modifiers::SHIFT) {
+                        if !cx.modifiers().contains(Modifiers::SHIFT) {
                             self.clear_selection(app)
                         } else {
                             vec![]
@@ -167,7 +167,7 @@ impl Tool for RoomTool {
                         Code::ArrowUp => self.nudge(app, map, MapVectorStrict::new(0, -8)),
                         Code::ArrowRight => self.nudge(app, map, MapVectorStrict::new(8, 0)),
                         Code::ArrowLeft => self.nudge(app, map, MapVectorStrict::new(-8, 0)),
-                        Code::KeyA if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyA if cx.modifiers() == &Modifiers::CTRL => {
                             self.current_selection = rooms_in(
                                 map,
                                 MapRectStrict::new(
@@ -177,15 +177,15 @@ impl Tool for RoomTool {
                             );
                             vec![]
                         }
-                        Code::KeyC if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyC if cx.modifiers() == &Modifiers::CTRL => {
                             self.clipboard_copy(app, mapid)
                         }
-                        Code::KeyX if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyX if cx.modifiers() == &Modifiers::CTRL => {
                             let mut result = self.clipboard_copy(app, mapid);
                             result.extend(self.delete_all(app));
                             result
                         }
-                        Code::KeyV if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyV if cx.modifiers() == &Modifiers::CTRL => {
                             if let Ok(s) = cx.get_clipboard() {
                                 let app = cx.data().unwrap();
                                 self.clipboard_paste(app, s)
@@ -218,7 +218,7 @@ impl Tool for RoomTool {
     fn draw(&mut self, canvas: &mut Canvas, state: &AppState, cx: &DrawContext) {
         let Some(map) = state.current_map_ref() else { return };
 
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos_precise = state
             .map_tab_unwrap()
             .transform
@@ -316,7 +316,7 @@ impl Tool for RoomTool {
 
     fn cursor(&self, cx: &mut EventContext) -> CursorIcon {
         let app = cx.data::<AppState>().unwrap();
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos_precise = app
             .map_tab_unwrap()
             .transform

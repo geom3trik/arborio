@@ -53,25 +53,25 @@ where
                     let item4 = item.clone();
                     HStack::new(cx, move |cx| {
                         Label::new(cx, "").bind(item2, |handle, item| {
-                            let app = handle.cx.data::<AppState>().unwrap();
-                            let text = item.get(handle.cx).display_name(app);
+                            let app = handle.data::<AppState>().unwrap();
+                            let text = item.get(&handle).display_name(app);
                             handle.text(&text);
                         });
                     })
                     .class("palette_item")
                     .class("list_highlight")
                     .bind(selected.clone(), move |handle, selected| {
-                        let mine = item3.get(handle.cx);
-                        let selected = selected.get(handle.cx);
+                        let mine = item3.get(&handle);
+                        let selected = selected.get(&handle);
                         handle.checked(selected.same(&mine));
                     })
                     .bind(
                         palette_widget_filter_lens::<T, LI, LO>(),
                         move |handle, filter| {
-                            let filter = filter.get(handle.cx);
-                            let item = item4.get(handle.cx);
+                            let filter = filter.get(&handle);
+                            let item = item4.get(&handle);
                             let visible = item
-                                .search_text(handle.cx.data().unwrap())
+                                .search_text(&handle.data().unwrap())
                                 .to_lowercase()
                                 .contains(&filter.to_lowercase());
                             handle.display(visible);
@@ -79,7 +79,7 @@ where
                     )
                     .on_press(move |cx| {
                         let item = item.get(cx);
-                        (callback)(cx.as_mut(), item);
+                        (callback)(cx, item);
                     });
                 });
                 HStack::new(cx, move |cx| {
@@ -88,17 +88,17 @@ where
                 .class("palette_item")
                 .class("list_highlight")
                 .bind(selected2.clone(), move |handle, selected| {
-                    let selected = selected.get(handle.cx);
+                    let selected = selected.get(&handle);
                     handle.checked(selected.same(&T::other()));
                 })
                 .on_press(move |cx| {
                     let item = T::other();
-                    (callback)(cx.as_mut(), item);
+                    (callback)(cx, item);
                 });
                 Textbox::new(cx, other_lens).on_edit(other_callback).bind(
                     selected2,
                     move |handle, selected| {
-                        let selected = selected.get(handle.cx);
+                        let selected = selected.get(&handle);
                         handle.display(selected.same(&T::other()));
                     },
                 );
@@ -133,7 +133,7 @@ impl<T: PaletteItem, L: Lens<Target = T>, LO: Lens<Target = String>> View
 
         canvas.save();
         canvas.translate(bounds.x, bounds.y);
-        let dpi = cx.style.dpi_factor as f32;
+        let dpi = cx.scale_factor();
         canvas.scissor(0.0, 0.0, bounds.w, 100.0 * dpi);
 
         let mut path = Path::new();
@@ -154,7 +154,7 @@ impl<T: PaletteItem, L: Lens<Target = T>, LO: Lens<Target = String>> View
         data.draw(cx.data::<AppState>().unwrap(), canvas, &other);
         canvas.restore();
 
-        cx.sync_text_styles();
+        // cx.sync_text_styles();
         cx.draw_text(canvas, (10. * dpi, 100. * dpi), (0., 1.));
 
         canvas.restore();
@@ -179,7 +179,8 @@ impl<T: PaletteItem, L: Lens<Target = T>, LO: Lens<Target = String>> View
                     }
                     _ => {}
                 }
-                cx.text_context.set_text(cx.current(), &self.filter);
+                cx.set_text(&self.filter);
+                // cx.text_context.set_text(cx.current(), &self.filter);
             }
             WindowEvent::MouseDown(MouseButton::Left) => {
                 cx.focus();

@@ -11,9 +11,8 @@ use arborio_state::lenses::{
     current_styleground_lens, hash_map_nth_key_lens, HashMapIndexWithLens, HashMapLenLens,
     IsFailedLens, StylegroundNameLens,
 };
-use arborio_utils::vizia::fonts::icons_names::{DOWN, MINUS, PLUS, UP};
+use arborio_utils::vizia::icons::{ICON_CHEVRON_DOWN, ICON_MINUS, ICON_PLUS, ICON_CHEVRON_UP};
 use arborio_utils::vizia::prelude::*;
-use arborio_utils::vizia::state::UnwrapLens;
 use arborio_widgets_common::advanced_tweaker::*;
 
 macro_rules! edit_text {
@@ -107,7 +106,7 @@ where
             .class("list_highlight")
             .bind(current_styleground_lens(), move |handle, selected| {
                 let is_me =
-                    selected.get_fallible(handle.cx) == Some(StylegroundSelection { fg, idx });
+                    selected.get_fallible(&handle) == Some(StylegroundSelection { fg, idx });
                 handle.checked(is_me);
             })
             .on_press(move |cx| {
@@ -143,7 +142,7 @@ impl StyleTweakerWidget {
                                 ));
                             }
                         },
-                        |cx| Label::new(cx, PLUS).class("icon"),
+                        |cx| Label::new(cx, ICON_PLUS).class("icon"),
                     );
                     Button::new(
                         cx,
@@ -157,7 +156,7 @@ impl StyleTweakerWidget {
                                 ));
                             }
                         },
-                        |cx| Label::new(cx, MINUS).class("icon"),
+                        |cx| Label::new(cx, ICON_MINUS).class("icon"),
                     );
                     Button::new(
                         cx,
@@ -191,7 +190,7 @@ impl StyleTweakerWidget {
                                 styleground: Some(target),
                             })
                         },
-                        |cx| Label::new(cx, DOWN).class("icon"),
+                        |cx| Label::new(cx, ICON_CHEVRON_DOWN).class("icon"),
                     );
                     Button::new(
                         cx,
@@ -228,7 +227,7 @@ impl StyleTweakerWidget {
                                 styleground: Some(target),
                             })
                         },
-                        |cx| Label::new(cx, UP).class("icon"),
+                        |cx| Label::new(cx, ICON_CHEVRON_UP).class("icon"),
                     );
                 });
                 ScrollView::new(cx, 0.0, 0.0, false, true, move |cx| {
@@ -272,7 +271,7 @@ impl StyleTweakerWidget {
             "Dreaming Status",
             current_styleground_impl_lens().then(CelesteMapStyleground::dreaming),
             [None, Some(true), Some(false)],
-            |_, item| {
+            |item| {
                 match item {
                     // clion has a false-positive error here
                     None => "Both",
@@ -347,7 +346,7 @@ fn tweak_attr_picker<T: 'static + Data + Send + Sync>(
     name: &'static str,
     lens: impl Lens<Target = T>,
     items: impl 'static + IntoIterator<Item = T> + Clone,
-    labels: impl 'static + Fn(&mut Context, &T) -> String,
+    labels: impl 'static + Fn(&T) -> String,
     setter: impl 'static + Send + Sync + Fn(&mut EventContext, T),
 ) {
     let labels = Arc::new(labels);
@@ -363,25 +362,25 @@ fn tweak_attr_picker<T: 'static + Data + Send + Sync>(
                 HStack::new(cx, move |cx| {
                     let labels2 = labels2.clone();
                     Label::new(cx, "").bind(lens, move |handle, item| {
-                        if let Some(item) = item.get_fallible(handle.cx) {
-                            let label = (labels2)(handle.cx, &item);
+                        if let Some(item) = item.get_fallible(&handle) {
+                            let label = (labels2)(&item);
                             handle.text(&label);
                         }
                     });
-                    Label::new(cx, DOWN).class("icon").class("dropdown_icon");
+                    Label::new(cx, ICON_CHEVRON_DOWN).class("icon").class("dropdown_icon");
                 })
             },
             move |cx| {
                 let items = items.clone();
                 for item in items.into_iter() {
                     let setter = setter.clone();
-                    let label = labels(cx, &item);
+                    let label = labels(&item);
                     Label::new(cx, &label)
                         .class("dropdown_element")
                         .class("btn_highlight")
                         .on_press(move |cx| {
                             cx.emit(PopupEvent::Close);
-                            setter(cx.as_mut(), item.clone());
+                            setter(cx, item.clone());
                         });
                 }
             },

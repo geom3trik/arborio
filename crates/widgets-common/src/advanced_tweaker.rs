@@ -6,7 +6,7 @@ use crate::validator_box::validator_box;
 use arborio_maploader::map_struct::Attribute;
 use arborio_modloader::config::AttributeType;
 use arborio_state::lenses::IsFailedLens;
-use arborio_utils::vizia::fonts::icons_names::{CANCEL, DOWN, PLUS};
+use arborio_utils::vizia::icons::{ICON_X, ICON_CHEVRON_DOWN, ICON_PLUS};
 use arborio_utils::vizia::prelude::*;
 
 #[derive(Lens)]
@@ -146,12 +146,12 @@ pub fn advanced_attrs_editor<
                     );
                 }
 
-                Label::new(cx, CANCEL)
+                Label::new(cx, ICON_X)
                     .class("icon")
                     .class("remove_btn")
                     .on_press(move |cx| {
                         let keyed = key_lens.get(cx);
-                        remover(cx.as_mut(), keyed);
+                        remover(cx, keyed);
                     });
             });
         }
@@ -170,10 +170,10 @@ pub fn advanced_attrs_editor<
             |cx| {
                 HStack::new(cx, |cx| {
                     Label::new(cx, "").bind(NewAttributeData::ty, |handle, ty| {
-                        let text = format!("{:?}", ty.get(handle.cx));
+                        let text = format!("{:?}", ty.get(&handle));
                         handle.text(&text);
                     });
-                    Label::new(cx, DOWN).class("icon").class("dropdown_icon");
+                    Label::new(cx, ICON_CHEVRON_DOWN).class("icon").class("dropdown_icon");
                 })
             },
             |cx| {
@@ -195,14 +195,14 @@ pub fn advanced_attrs_editor<
                 });
             },
         );
-        Label::new(cx, PLUS)
+        Label::new(cx, ICON_PLUS)
             .class("icon")
             .class("add_btn")
             .on_press(move |cx| {
                 let name = NewAttributeData::name.get(cx);
                 if !name.is_empty() {
                     let weh = NewAttributeData::ty.get(cx);
-                    adder(cx.as_mut(), name, weh);
+                    adder(cx, name, weh);
                     cx.emit(NewAttributeDataEvent::SetName("".to_owned()));
                 }
             });

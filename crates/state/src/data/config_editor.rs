@@ -31,7 +31,7 @@ impl SearchScope {
         }
     }
 
-    pub fn text<C: DataContext>(&self, cx: &mut C) -> String {
+    pub fn text<C: DataContext>(&self, cx: &C) -> String {
         match self {
             SearchScope::AllMods => "All Mods".to_owned(),
             SearchScope::AllOpenMods => "All Open Projects".to_owned(),

@@ -58,7 +58,7 @@ pub fn deleter<F1, F2>(
                         .class("danger")
                         .on_press(move |cx| {
                             if DeleteState::validated.get(cx) {
-                                do_delete(cx.as_mut());
+                                do_delete(cx);
                             }
                         });
                     Label::new(cx, "Cancel")

@@ -55,7 +55,7 @@ fn build_tool_settings(cx: &mut Context) {
             .id("tool_settings_snap");
     })
     .bind(AppState::current_toolspec, move |handle, spec| {
-        let spec = spec.get(handle.cx);
+        let spec = spec.get(&handle);
         let show = spec == ToolSpec::Pencil || spec == ToolSpec::Selection;
         handle.display(show);
     });
@@ -75,7 +75,7 @@ fn build_tool_settings(cx: &mut Context) {
             .id("tool_settings_interval");
     })
     .bind(AppState::current_toolspec, move |handle, spec| {
-        let spec = spec.get(handle.cx);
+        let spec = spec.get(&handle);
         let show = spec == ToolSpec::Pencil;
         handle.display(show);
     });
@@ -95,7 +95,7 @@ fn build_tool_settings(cx: &mut Context) {
             .id("tool_settings_advanced");
     })
     .bind(AppState::current_toolspec, move |handle, spec| {
-        let spec = spec.get(handle.cx);
+        let spec = spec.get(&handle);
         let show = spec == ToolSpec::Selection;
         handle.display(show);
     });
@@ -138,7 +138,7 @@ pub fn build_layer_picker(cx: &mut Context) {
             .checked(selected)
             .class("list_highlight")
             .bind(AppState::current_toolspec, move |handle, toolspec| {
-                let toolspec = toolspec.get(handle.cx);
+                let toolspec = toolspec.get(&handle);
                 handle.display(
                     toolspec == ToolSpec::Selection
                         || (toolspec == ToolSpec::Bucket
@@ -152,7 +152,7 @@ pub fn build_layer_picker(cx: &mut Context) {
     })
     .id("layer_picker")
     .bind(AppState::current_toolspec, move |handle, toolspec| {
-        let toolspec = toolspec.get(handle.cx);
+        let toolspec = toolspec.get(&handle);
         handle.display(toolspec != ToolSpec::Style);
     });
 }
@@ -170,7 +170,7 @@ pub fn build_palette_widgets(cx: &mut Context) {
         |cx, other| cx.emit(AppEvent::SelectPaletteTileOther { fg: true, other }),
     )
     .bind(pair, |handle, pair| {
-        let (toolspec, layer) = pair.get(handle.cx);
+        let (toolspec, layer) = pair.get(&handle);
         handle.display(
             layer == Layer::FgTiles
                 && (toolspec == ToolSpec::Pencil || toolspec == ToolSpec::Bucket),
@@ -186,7 +186,7 @@ pub fn build_palette_widgets(cx: &mut Context) {
         |cx, other| cx.emit(AppEvent::SelectPaletteTileOther { fg: false, other }),
     )
     .bind(pair, |handle, pair| {
-        let (toolspec, layer) = pair.get(handle.cx);
+        let (toolspec, layer) = pair.get(&handle);
         handle.display(
             layer == Layer::BgTiles
                 && (toolspec == ToolSpec::Pencil || toolspec == ToolSpec::Bucket),
@@ -202,7 +202,7 @@ pub fn build_palette_widgets(cx: &mut Context) {
         |cx, other| cx.emit(AppEvent::SelectPaletteEntityOther { other }),
     )
     .bind(pair, |handle, pair| {
-        let (toolspec, layer) = pair.get(handle.cx);
+        let (toolspec, layer) = pair.get(&handle);
         handle.display(layer == Layer::Entities && toolspec == ToolSpec::Pencil);
     });
 
@@ -215,7 +215,7 @@ pub fn build_palette_widgets(cx: &mut Context) {
         |cx, other| cx.emit(AppEvent::SelectPaletteTriggerOther { other }),
     )
     .bind(pair, |handle, pair| {
-        let (toolspec, layer) = pair.get(handle.cx);
+        let (toolspec, layer) = pair.get(&handle);
         handle.display(layer == Layer::Triggers && toolspec == ToolSpec::Pencil);
     });
 
@@ -228,7 +228,7 @@ pub fn build_palette_widgets(cx: &mut Context) {
         |cx, other| cx.emit(AppEvent::SelectPaletteDecalOther { other }),
     )
     .bind(pair, |handle, pair| {
-        let (toolspec, layer) = pair.get(handle.cx);
+        let (toolspec, layer) = pair.get(&handle);
         handle.display(
             (layer == Layer::FgDecals || layer == Layer::BgDecals) && toolspec == ToolSpec::Pencil,
         );
@@ -239,7 +239,7 @@ pub fn build_palette_widgets(cx: &mut Context) {
             cx.emit(AppEvent::SelectPaletteObjectTile { tile })
         })
         .bind(pair, |handle, pair| {
-            let (toolspec, layer) = pair.get(handle.cx);
+            let (toolspec, layer) = pair.get(&handle);
             handle.display(layer == Layer::ObjectTiles && toolspec == ToolSpec::Pencil);
         })
         .min_height(Pixels(100.0))

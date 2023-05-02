@@ -9,7 +9,7 @@ use arborio_state::data::app::AppEvent;
 use arborio_state::data::app::AppState;
 use arborio_state::data::tabs::AppTab;
 use arborio_state::lenses::{TabTextLens, VecIndexWithLens};
-use arborio_utils::vizia::fonts::icons_names::CANCEL;
+use arborio_utils::vizia::icons::ICON_X;
 use arborio_utils::vizia::prelude::*;
 
 pub fn build_tabs(cx: &mut Context) {
@@ -32,7 +32,7 @@ pub fn build_tab_bar(cx: &mut Context) {
     List::new(cx, AppState::tabs, move |cx, tab_index, _tab| {
         HStack::new(cx, move |cx| {
             Label::new(cx, TabTextLens(tab_index));
-            Label::new(cx, CANCEL)
+            Label::new(cx, ICON_X)
                 .class("icon")
                 .class("close_btn")
                 .on_press(move |cx| {
@@ -45,7 +45,7 @@ pub fn build_tab_bar(cx: &mut Context) {
             cx.emit(AppEvent::SelectTab { idx: tab_index });
         })
         .bind(AppState::current_tab, move |handle, current_tab| {
-            let current_tab = current_tab.get(handle.cx);
+            let current_tab = current_tab.get(&handle);
             handle.checked(current_tab == tab_index);
         });
     })

@@ -1,5 +1,5 @@
 use arborio_utils::vizia::prelude::*;
-use arborio_utils::vizia::vg::{Color, ImageFlags, Paint, Path, PixelFormat, RenderTarget};
+use arborio_utils::vizia::vg::{Color, ImageFlags, Paint, Path, PixelFormat, RenderTarget, Transform2D};
 use lazy_static::lazy_static;
 use std::collections::HashSet;
 use std::env;
@@ -120,7 +120,9 @@ impl View for EditorWidget {
             return;
         }
         let t = &app.map_tab_unwrap().transform;
-        canvas.set_transform(t.m11, t.m12, t.m21, t.m22, t.m31.round(), t.m32.round());
+        let mut transform = Transform2D::identity();
+        transform = transform.new(t.m11, t.m12, t.m21, t.m22, t.m31.round(), t.m32.round());
+        canvas.set_transform(&transform);
 
         let map = app.loaded_maps.get(&app.map_tab_unwrap().id).unwrap();
         if *PERF_MONITOR {

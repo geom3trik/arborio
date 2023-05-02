@@ -180,7 +180,7 @@ impl Tool for SelectionTool {
         }
 
         let Some(room) = app.current_room_ref() else { return vec![] };
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos_precise = app
             .map_tab_unwrap()
             .transform
@@ -219,7 +219,7 @@ impl Tool for SelectionTool {
                         if let Some(g) = got {
                             self.pending_selection = HashSet::from([g]);
                         }
-                        if !cx.modifiers.contains(Modifiers::SHIFT) {
+                        if !cx.modifiers().contains(Modifiers::SHIFT) {
                             self.clear_selection(app, &room.floats)
                         } else {
                             AppEventStaging::default()
@@ -284,7 +284,7 @@ impl Tool for SelectionTool {
                         Code::ArrowLeft => {
                             self.nudge(app, room, RoomVector::new(-8, 0), room.floats.clone())
                         }
-                        Code::KeyA if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyA if cx.modifiers() == &Modifiers::CTRL => {
                             self.pending_selection = self.selectables_in(
                                 app,
                                 room,
@@ -296,15 +296,15 @@ impl Tool for SelectionTool {
                             );
                             self.confirm_selection(app)
                         }
-                        Code::KeyC if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyC if cx.modifiers() == &Modifiers::CTRL => {
                             self.clipboard_copy(app, room)
                         }
-                        Code::KeyX if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyX if cx.modifiers() == &Modifiers::CTRL => {
                             let mut result = self.clipboard_copy(app, room);
                             result.accumulate(self.delete_all(app, room));
                             result
                         }
-                        Code::KeyV if cx.modifiers == &Modifiers::CTRL => {
+                        Code::KeyV if cx.modifiers() == &Modifiers::CTRL => {
                             if let Ok(s) = cx.get_clipboard() {
                                 let app = cx.data().unwrap();
                                 self.clipboard_paste(app, s)
@@ -365,7 +365,7 @@ impl Tool for SelectionTool {
         );
         // no scissor!
 
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos_precise = state
             .map_tab_unwrap()
             .transform
@@ -445,7 +445,7 @@ impl Tool for SelectionTool {
     fn cursor(&self, cx: &mut EventContext) -> CursorIcon {
         let app = cx.data::<AppState>().unwrap();
         let Some(room) = app.current_room_ref() else { return CursorIcon::Default };
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos_precise = app
             .map_tab_unwrap()
             .transform

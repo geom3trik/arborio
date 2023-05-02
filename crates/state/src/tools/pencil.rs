@@ -44,7 +44,7 @@ impl Tool for PencilTool {
         }
 
         let Some(room) = app.current_room_ref() else { return vec![] };
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos = app
             .map_tab_unwrap()
             .transform
@@ -58,7 +58,7 @@ impl Tool for PencilTool {
                 self.do_draw_start(app, room_pos);
                 self.do_draw(app, room_pos)
             }
-            WindowEvent::MouseMove(..) if cx.mouse.left.state == MouseButtonState::Pressed => {
+            WindowEvent::MouseMove(..) if cx.mouse().left.state == MouseButtonState::Pressed => {
                 self.do_draw(app, room_pos)
             }
             WindowEvent::MouseUp(MouseButton::Left) => self.do_draw_finish(app, room_pos),
@@ -68,7 +68,7 @@ impl Tool for PencilTool {
 
     fn switch_off(&mut self, app: &AppState, cx: &EventContext) -> Vec<AppEvent> {
         let Some(room) = app.current_room_ref() else { return vec![] };
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos = app
             .map_tab_unwrap()
             .transform
@@ -95,7 +95,7 @@ impl Tool for PencilTool {
             room.data.bounds.size.height as f32,
         );
 
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos = state
             .map_tab_unwrap()
             .transform
@@ -154,7 +154,7 @@ impl Tool for PencilTool {
                 );
             }
             Layer::FgDecals | Layer::BgDecals => {
-                if cx.mouse.left.state == MouseButtonState::Released {
+                if cx.mouse().left.state == MouseButtonState::Released {
                     canvas.set_global_alpha(0.5);
                 }
                 let decal = instantiate_decal(

@@ -71,9 +71,9 @@ pub fn generic_nav(
     cx: &EventContext,
     room: bool,
 ) -> Vec<AppEvent> {
-    let screen_pt = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+    let screen_pt = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
     match event {
-        WindowEvent::MouseScroll(_, y) if cx.modifiers.contains(Modifiers::CTRL) => {
+        WindowEvent::MouseScroll(_, y) if cx.modifiers().contains(Modifiers::CTRL) => {
             vec![AppEvent::Zoom {
                 tab: state.current_tab,
                 delta: y.exp(),
@@ -85,8 +85,8 @@ pub fn generic_nav(
                     .transform_point(screen_pt),
             }]
         }
-        WindowEvent::MouseScroll(x, y) if !cx.modifiers.contains(Modifiers::CTRL) => {
-            let (x, y) = if cx.modifiers.contains(Modifiers::SHIFT) {
+        WindowEvent::MouseScroll(x, y) if !cx.modifiers().contains(Modifiers::CTRL) => {
+            let (x, y) = if cx.modifiers().contains(Modifiers::SHIFT) {
                 (y, x)
             } else {
                 (x, y)

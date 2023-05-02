@@ -22,7 +22,7 @@ impl Tool for StyleTool {
             return events;
         }
 
-        let screen_pos = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_pos = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let map_pos_precise = app
             .map_tab_unwrap()
             .transform

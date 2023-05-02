@@ -11,7 +11,7 @@ use arborio_state::lenses::{
     CurrentSelectedEntityConfigAttributesLens, CurrentSelectedEntityHasNodesLens,
     CurrentSelectedEntityResizableLens, HashMapIndexWithLens, HashMapLenLens, IsFailedLens,
 };
-use arborio_utils::vizia::fonts::icons_names::MINUS;
+use arborio_utils::vizia::icons::ICON_MINUS;
 use arborio_utils::vizia::prelude::*;
 use arborio_widgets_common::advanced_tweaker::advanced_attrs_editor;
 use arborio_widgets_common::basic_tweaker::basic_attrs_editor;
@@ -185,11 +185,11 @@ pub fn build_tweaker(cx: &mut Context) {
                                             edit_node_y(cx, idx, text);
                                         },
                                     );
-                                    Label::new(cx, MINUS)
+                                    Label::new(cx, ICON_MINUS)
                                         .class("icon")
                                         .class("remove_btn")
                                         .on_press(move |cx| {
-                                            remove_node(cx.as_mut(), idx);
+                                            remove_node(cx, idx);
                                         });
                                 });
                             },

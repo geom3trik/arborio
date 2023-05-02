@@ -1,4 +1,4 @@
-use arborio_utils::vizia::fonts::icons_names::{DOWN, MINUS};
+use arborio_utils::vizia::icons::{ICON_CHEVRON_DOWN, ICON_MINUS};
 use arborio_utils::vizia::prelude::*;
 use dialog::DialogBox;
 use std::collections::hash_map::Entry;
@@ -27,7 +27,6 @@ use arborio_state::lenses::{
 use arborio_state::rendering::draw_entity;
 use arborio_utils::interned::intern_str;
 use arborio_utils::units::TileGrid;
-use arborio_utils::vizia::state::UnwrapLens;
 use arborio_utils::vizia::vg::{Paint, Path as PPath};
 use arborio_widgets_common::basic_tweaker::basic_attrs_editor;
 
@@ -185,13 +184,13 @@ pub fn build_search_settings(cx: &mut Context) {
                         Label::new(cx, "").bind(
                             ctab.then(ConfigEditorTab::search_scope),
                             |handle, scope| {
-                                if let Some(thing) = scope.get_fallible(handle.cx) {
-                                    let text = thing.text(handle.cx);
+                                if let Some(thing) = scope.get_fallible(&handle) {
+                                    let text = thing.text(&handle);
                                     handle.text(&text);
                                 }
                             },
                         );
-                        Label::new(cx, DOWN).class("icon").class("dropdown_icon");
+                        Label::new(cx, ICON_CHEVRON_DOWN).class("icon").class("dropdown_icon");
                     })
                 },
                 move |cx| {
@@ -219,7 +218,7 @@ pub fn build_search_settings(cx: &mut Context) {
                 move |cx| {
                     HStack::new(cx, move |cx| {
                         Label::new(cx, ctab.then(ConfigEditorTab::search_type));
-                        Label::new(cx, DOWN).class("icon").class("dropdown_icon");
+                        Label::new(cx, ICON_CHEVRON_DOWN).class("icon").class("dropdown_icon");
                     })
                 },
                 move |cx| {
@@ -247,7 +246,7 @@ pub fn build_search_settings(cx: &mut Context) {
                 move |cx| {
                     HStack::new(cx, move |cx| {
                         Label::new(cx, ctab.then(ConfigEditorTab::search_filter));
-                        Label::new(cx, DOWN).class("icon").class("dropdown_icon");
+                        Label::new(cx, ICON_CHEVRON_DOWN).class("icon").class("dropdown_icon");
                     })
                 },
                 move |cx| {
@@ -596,7 +595,7 @@ fn build_search_results(cx: &mut Context) {
                     .bind(
                         ctab.then(ConfigEditorTab::selected_result),
                         move |handle, selected| {
-                            let selected = selected.get(handle.cx);
+                            let selected = selected.get(&handle);
                             handle.checked(selected == idx);
                         },
                     )
@@ -875,11 +874,11 @@ fn build_entity_tweaker(cx: &mut Context) {
                 Textbox::new(cx, item.map(|pair| pair.y)).on_edit(move |cx, text| {
                     edit_node_y(cx, idx, text);
                 });
-                Label::new(cx, MINUS)
+                Label::new(cx, ICON_MINUS)
                     .class("icon")
                     .class("remove_btn")
                     .on_press(move |cx| {
-                        remove_node(cx.as_mut(), idx);
+                        remove_node(cx, idx);
                     });
             });
         },
@@ -936,10 +935,10 @@ where
         path.line_to(bounds.w / 2.0, 0.0);
         canvas.stroke_path(
             &mut path,
-            &Paint::color(Color::cyan().into()).with_line_width(cx.style.dpi_factor as f32),
+            &Paint::color(Color::cyan().into()).with_line_width(cx.scale_factor()),
         );
 
-        canvas.scale(cx.style.dpi_factor as f32, cx.style.dpi_factor as f32);
+        canvas.scale(cx.scale_factor(), cx.scale_factor());
 
         self.config.view(cx.data().unwrap(), |config| {
             if let Some(config) = config {

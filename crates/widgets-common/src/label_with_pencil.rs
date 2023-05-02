@@ -1,7 +1,6 @@
 use crate::container_model::{ModelContainer, ModelContainerSetter};
 use crate::validator_box::validator_box;
-use arborio_utils::vizia::fonts::icons_names::{CANCEL, CHECK};
-use arborio_utils::vizia::fonts::material_names::PENCIL;
+use arborio_utils::vizia::icons::{ICON_X, ICON_CHECK, ICON_PENCIL};
 use arborio_utils::vizia::prelude::*;
 use std::str::FromStr;
 
@@ -56,22 +55,22 @@ where
             let lens = lens.clone();
             if editing {
                 ModelContainer { val: lens.get(cx) }.build(cx);
-                Label::new(cx, CHECK)
+                Label::new(cx, ICON_CHECK)
                     .font_family(vec![FamilyOwned::Name("Entypo".to_owned())])
                     .class("btn_highlight")
                     .class("pencil_icon")
                     .on_press(move |cx| {
                         if EditingState::valid.get(cx) {
                             let value = ModelContainer::val.get(cx);
-                            setter(cx.as_mut(), value);
+                            setter(cx, value);
                             cx.emit(EditingStateEvent::End);
                         }
                     })
                     .bind(EditingState::valid, move |handle, lens| {
-                        let val = lens.get(handle.cx);
+                        let val = lens.get(&handle);
                         handle.toggle_class("disabled", val);
                     });
-                Label::new(cx, CANCEL)
+                Label::new(cx, ICON_X)
                     .font_family(vec![FamilyOwned::Name("Entypo".to_owned())])
                     .class("btn_highlight")
                     .class("pencil_icon")
@@ -96,7 +95,7 @@ where
                 );
             } else {
                 if editable {
-                    Label::new(cx, PENCIL)
+                    Label::new(cx, ICON_PENCIL)
                         .font_family(vec![FamilyOwned::Name("Material Icons".to_owned())])
                         .class("btn_highlight")
                         .class("pencil_icon")

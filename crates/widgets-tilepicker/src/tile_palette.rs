@@ -2,7 +2,7 @@ use arborio_state::data::app::{AppEvent, AppState};
 use arborio_state::tools::SCROLL_SENSITIVITY;
 use arborio_utils::units::*;
 use arborio_utils::vizia::prelude::*;
-use arborio_utils::vizia::vg::{Color, Paint, Path};
+use arborio_utils::vizia::vg::{Color, Paint, Path, Transform2D};
 
 pub struct TilePaletteWidget {
     selected: u32,
@@ -38,7 +38,7 @@ impl View for TilePaletteWidget {
         let bounds = cx.cache.get_bounds(entity);
         let t = app.objtiles_transform;
         let t = t.then_translate(ScreenVector::new(bounds.x, bounds.y));
-        let screen_hovered = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_hovered = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let tinv = t.inverse().unwrap();
         let map_hovered = tinv.transform_point(screen_hovered);
 
@@ -46,13 +46,13 @@ impl View for TilePaletteWidget {
             match msg {
                 WindowEvent::MouseScroll(x, y) => {
                     // TODO should we really be emitting these events directly...?
-                    if cx.modifiers.contains(Modifiers::CTRL) {
+                    if cx.modifiers().contains(Modifiers::CTRL) {
                         cx.emit(AppEvent::ZoomObjectTiles {
                             delta: y.exp(),
                             focus: map_hovered,
                         });
                     } else {
-                        let (x, y) = if cx.modifiers.contains(Modifiers::SHIFT) {
+                        let (x, y) = if cx.modifiers().contains(Modifiers::SHIFT) {
                             (y, x)
                         } else {
                             (x, y)
@@ -63,7 +63,7 @@ impl View for TilePaletteWidget {
                     }
                 }
                 WindowEvent::MouseDown(MouseButton::Left) => {
-                    let screen_hovered = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+                    let screen_hovered = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
                     let map_hovered = t.inverse().unwrap().transform_point(screen_hovered);
                     let tile_hovered =
                         point_room_to_tile(&point_lose_precision(&map_hovered).cast_unit());
@@ -115,7 +115,9 @@ impl View for TilePaletteWidget {
         );
 
         let t = app.objtiles_transform;
-        canvas.set_transform(t.m11, t.m12, t.m21, t.m22, t.m31.round(), t.m32.round());
+        let mut transform = Transform2D::identity();
+        transform = transform.new(t.m11, t.m12, t.m21, t.m22, t.m31.round(), t.m32.round()); //This must be a mistake in femtovg. Why does `new` take `&self`???
+        canvas.set_transform(&transform);
 
         let palette = app.current_palette_unwrap();
         if let Err(e) = palette.gameplay_atlas.draw_sprite(
@@ -131,7 +133,7 @@ impl View for TilePaletteWidget {
             log::error!("{}", e);
         }
 
-        let screen_hovered = ScreenPoint::new(cx.mouse.cursorx, cx.mouse.cursory);
+        let screen_hovered = ScreenPoint::new(cx.mouse().cursorx, cx.mouse().cursory);
         let screen_hovered = screen_hovered - ScreenVector::new(bounds.x, bounds.y);
         let map_hovered = t.inverse().unwrap().transform_point(screen_hovered);
         let tile_hovered = point_room_to_tile(&point_lose_precision(&map_hovered).cast_unit());
