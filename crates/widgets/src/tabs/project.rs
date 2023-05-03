@@ -2,6 +2,7 @@ use arborio_modloader::module::{CelesteModuleKind, MapPath, ModuleID};
 use arborio_state::data::app::{AppEvent, AppState};
 use arborio_state::data::project_map::ProjectEvent;
 use arborio_state::lenses::StaticerLens;
+use arborio_utils::vizia::icons::ICON_PLUS;
 use arborio_utils::vizia::prelude::*;
 use arborio_widgets_common::confirm_delete::deleter;
 use arborio_widgets_common::label_with_pencil::label_with_pencil;
@@ -90,7 +91,7 @@ fn build_title(cx: &mut Context, project: ModuleID) {
         )
         .class("project_path")
         .class("pencilable");
-    });
+    }).size(Auto);
 }
 
 fn build_map_list(cx: &mut Context, project: ModuleID) {
@@ -104,9 +105,10 @@ fn build_map_list(cx: &mut Context, project: ModuleID) {
 
     Label::new(cx, "Maps").class("module_category");
     HStack::new(cx, move |cx| {
-        Label::new(cx, "+").class("big_plus");
+        Label::new(cx, ICON_PLUS).class("big_plus");
         Label::new(cx, "New Map").id("new_map_text");
     })
+    .size(Auto)
     .class("btn_highlight")
     .id("new_map_button")
     .on_press(move |cx| {

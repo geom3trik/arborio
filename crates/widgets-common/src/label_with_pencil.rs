@@ -56,7 +56,7 @@ where
             if editing {
                 ModelContainer { val: lens.get(cx) }.build(cx);
                 Label::new(cx, ICON_CHECK)
-                    .font_family(vec![FamilyOwned::Name("Entypo".to_owned())])
+                    .class("icon")
                     .class("btn_highlight")
                     .class("pencil_icon")
                     .on_press(move |cx| {
@@ -71,7 +71,7 @@ where
                         handle.toggle_class("disabled", val);
                     });
                 Label::new(cx, ICON_X)
-                    .font_family(vec![FamilyOwned::Name("Entypo".to_owned())])
+                    .class("icon")
                     .class("btn_highlight")
                     .class("pencil_icon")
                     .on_press(|cx| {
@@ -96,7 +96,7 @@ where
             } else {
                 if editable {
                     Label::new(cx, ICON_PENCIL)
-                        .font_family(vec![FamilyOwned::Name("Material Icons".to_owned())])
+                        .class("icon")
                         .class("btn_highlight")
                         .class("pencil_icon")
                         .on_press(move |cx| cx.emit(EditingStateEvent::Start));
@@ -104,5 +104,5 @@ where
                 Label::new(cx, lens).class("pencilable_label");
             }
         });
-    })
+    }).size(Auto)
 }

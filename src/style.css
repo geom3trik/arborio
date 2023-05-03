@@ -1,3 +1,8 @@
+* {
+    border-width: 1px;
+    border-color: red;
+}
+
 /* main layout */
 
 #main {
@@ -54,8 +59,7 @@ menubutton:over {
 .tab_bar {
     height: auto;
     layout-type: row;
-    width: 100%;
-    min-width: 0px;
+    width: 1s;
 }
 
 .tab {
@@ -176,7 +180,7 @@ menubutton:over {
 }
 
 #maps_container {
-    top: 30px;
+    /* top: 30px; */
     height: auto;
 }
 
@@ -262,6 +266,10 @@ arborio_editor {
 }
 
 #left_bar {
+    width: 200px;
+}
+
+#tool_picker {
     width: auto;
 }
 
@@ -619,6 +627,7 @@ button:over {
 
 .list_highlight {
     height: auto;
+    width: auto;
 }
 
 .list_highlight:checked {

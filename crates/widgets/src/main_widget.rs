@@ -36,9 +36,9 @@ pub fn main_widget(cx: &mut Context) {
         });
     });
     VStack::new(cx, move |cx| {
-        MenuController::new(cx, false, |cx| {
-            MenuStack::new_horizontal(cx, build_menu_bar).id("menu_bar");
-        });
+        // MenuController::new(cx, false, |cx| {
+        //     MenuStack::new_horizontal(cx, build_menu_bar).id("menu_bar");
+        // });
         build_tab_bar(cx);
         build_tabs(cx);
 

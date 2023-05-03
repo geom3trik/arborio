@@ -42,6 +42,7 @@ pub fn build_installation_tab(cx: &mut Context) {
                                     Label::new(cx, "+").class("big_plus");
                                     Label::new(cx, "New Project").id("new_mod_text");
                                 })
+                                .size(Auto)
                                 .class("btn_highlight")
                                 .id("new_mod_button")
                                 .on_press(|cx| cx.emit(AppEvent::NewMod));
