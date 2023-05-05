@@ -1,7 +1,7 @@
-* {
+/* * {
     border-width: 1px;
     border-color: red;
-}
+} */
 
 .scroll_container hstack, .scroll_container vstack {
     height: auto;
