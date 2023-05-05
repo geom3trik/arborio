@@ -81,7 +81,7 @@ where
                         let item = item.get(cx);
                         (callback)(cx, item);
                     });
-                });
+                }).width(Stretch(1.0));
                 HStack::new(cx, move |cx| {
                     Label::new(cx, "Other...");
                 })

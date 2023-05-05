@@ -3,7 +3,12 @@
     border-color: red;
 } */
 
-.scroll_container hstack, .scroll_container vstack {
+scrollview .scroll_content {
+    width: 1s;
+    height: auto;
+}
+
+.scroll_content hstack, .scroll_content vstack {
     height: auto;
 }
 
@@ -483,6 +488,7 @@ textbox {
     min-width: 18px;
     min-height: auto;
     height: 28px;
+    width: 1s;
     border-radius: 3px;
     border-width: 1px;
     border-color: #888888;
