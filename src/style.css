@@ -3,6 +3,10 @@
     border-color: red;
 }
 
+.scroll_container hstack, .scroll_container vstack {
+    height: auto;
+}
+
 /* main layout */
 
 #main {
@@ -129,6 +133,15 @@ menubutton:over {
 
 /* installation tab */
 
+scrollview.modules .scroll_content {
+    width: 1s;
+}
+
+#modules_container {
+    height: auto;
+    width: 1s;
+}
+
 .module_category {
     top: 20px;
     font-weight: bold;
@@ -144,17 +157,19 @@ menubutton:over {
     width: 100%;
     child-space: 5px;
     child-left: 40px;
+    height: auto;
 }
 
 #new_mod_button {
+    child-top: 1s;
+    child-bottom: 1s;
     child-left: 20px;
+    col-between: 10px;
     height: 50px;
 }
 
 #new_mod_text {
-    left: 10px;
-    top: 1s;
-    bottom: 1s;
+    /* left: 10px; */
 }
 
 .btn_highlight .big_plus {
@@ -175,12 +190,17 @@ menubutton:over {
 
 /* project tab */
 
+scrollview.maps .scroll_content {
+    height: auto;
+    width: 1s;
+}
+
 .project_title {
     font-size: 40.0;
 }
 
 #maps_container {
-    /* top: 30px; */
+    top: 30px;
     height: auto;
 }
 
@@ -193,6 +213,14 @@ menubutton:over {
 
 .map_title {
     font-size: 20.0;
+}
+
+#new_map_button {
+    child-top: 1s;
+    child-bottom: 1s;
+    child-left: 20px;
+    col-between: 10px;
+    height: 50px;
 }
 
 .btn_highlight.pencil_icon {
@@ -618,7 +646,6 @@ button:over {
 
 .btn_highlight {
     width: 1s;
-    min-width: auto;
 }
 
 .btn_highlight:over {

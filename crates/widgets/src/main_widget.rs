@@ -76,6 +76,7 @@ fn is_map() -> impl Lens<Target = bool> {
     IsFailedLens::new(current_tab_impl_lens().then(AppTab::map)).map(|b| !b)
 }
 
+/*
 fn build_menu_bar(cx: &mut Context) {
     Menu::new(
         cx,
@@ -175,3 +176,4 @@ fn build_menu_bar(cx: &mut Context) {
         },
     );
 }
+*/

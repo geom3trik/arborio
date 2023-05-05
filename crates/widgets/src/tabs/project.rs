@@ -17,7 +17,7 @@ pub fn build_project_tab(cx: &mut Context, project: ModuleID) {
             });
         })
         .id("maps_container");
-    });
+    }).class("maps");
 }
 
 fn build_title(cx: &mut Context, project: ModuleID) {
@@ -105,10 +105,9 @@ fn build_map_list(cx: &mut Context, project: ModuleID) {
 
     Label::new(cx, "Maps").class("module_category");
     HStack::new(cx, move |cx| {
-        Label::new(cx, ICON_PLUS).class("big_plus");
+        Label::new(cx, ICON_PLUS).class("icon").class("big_plus");
         Label::new(cx, "New Map").id("new_map_text");
     })
-    .size(Auto)
     .class("btn_highlight")
     .id("new_map_button")
     .on_press(move |cx| {

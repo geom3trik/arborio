@@ -1,3 +1,4 @@
+use arborio_utils::vizia::icons::ICON_PLUS;
 use arborio_utils::vizia::prelude::*;
 use dialog::DialogBox;
 use std::path::Path;
@@ -39,10 +40,9 @@ pub fn build_installation_tab(cx: &mut Context) {
                             if !modules_list.is_empty() {
                                 Label::new(cx, "My Mods").class("module_category");
                                 HStack::new(cx, move |cx| {
-                                    Label::new(cx, "+").class("big_plus");
+                                    Label::new(cx, ICON_PLUS).class("icon").class("big_plus");
                                     Label::new(cx, "New Project").id("new_mod_text");
                                 })
-                                .size(Auto)
                                 .class("btn_highlight")
                                 .id("new_mod_button")
                                 .on_press(|cx| cx.emit(AppEvent::NewMod));
@@ -90,7 +90,7 @@ pub fn build_installation_tab(cx: &mut Context) {
                         });
                     })
                     .id("modules_container");
-                });
+                }).class("modules");
             } else {
                 Button::new(
                     cx,

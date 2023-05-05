@@ -27,7 +27,7 @@ pub fn build_editor(cx: &mut Context) {
             EditorWidget::new(cx)
                 .width(Stretch(1.0))
                 .height(Stretch(1.0));
-        });
+        }).height(Stretch(1.0));
 
         VStack::new(cx, |cx| {
             build_layer_picker(cx);
@@ -36,7 +36,7 @@ pub fn build_editor(cx: &mut Context) {
         })
         .id("right_bar");
     })
-    .height(Stretch(1.0));
+    .width(Stretch(1.0));
 }
 
 fn build_tool_settings(cx: &mut Context) {
